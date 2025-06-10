@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { OrderController } from './usecases/createOrder/order.controller';
+import { OrderController } from './infra/rest/order/order.controller';
 import { CreateOrderUseCase } from './usecases/createOrder/createOrder.useCase';
 @Module({
   providers: [CreateOrderUseCase],

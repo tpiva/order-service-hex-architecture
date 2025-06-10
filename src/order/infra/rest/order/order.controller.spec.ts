@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { CreateOrderUseCase } from '../../../usecases/createOrder/createOrder.useCase';
 import { OrderController } from './order.controller';
-import { CreateOrderUseCase } from './createOrder.useCase';
 
 describe('OrderController', () => {
   let controller: OrderController;

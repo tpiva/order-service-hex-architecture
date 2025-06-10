@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { CreateOrderUseCase } from './createOrder.useCase';
+import { CreateOrderUseCase } from '../../../usecases/createOrder/createOrder.useCase';
 import { omit } from 'lodash';
 import {
   CreateOrderParamsDto,
