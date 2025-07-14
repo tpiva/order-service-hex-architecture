@@ -1,99 +1,173 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Order Management System - E-commerce
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+> 🇧🇷 [Leia em Português](README.pt-BR.md)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📋 Description
 
-## Description
+This is an order management system for e-commerce developed in **NestJS** using **Hexagonal Architecture** (also known as Ports and Adapters). The project implements a robust domain for order processing, with clear separation between business logic and external technologies.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### 🎯 System Objectives
 
-## Project setup
+- **Order Processing**: Creation, validation, and management of order lifecycle
+- **Payment Management**: Integration with payment gateways (Stripe, PayPal)
+- **Inventory Control**: Stock validation and updates
+- **Notification System**: Customer communication about order status
+- **Shipping Calculation**: Integration with shipping APIs for freight calculation
 
-```bash
-$ yarn install
+## 🏗️ Hexagonal Architecture
+
+The project follows **Hexagonal Architecture** principles, organizing code into three main layers:
+
+### 🎯 Core (Domain)
+- **Entities**: Represent business objects (Order, OrderItem, Address)
+- **Use Cases**: Contain business logic (CreateOrderUseCase)
+- **Repositories**: Interfaces that define persistence contracts
+- **Business Rules**: Domain-specific validations and rules
+
+### 🔌 Adapters
+- **Controllers**: Input adapters (REST API, GraphQL)
+- **Repositories**: Output adapters for database
+- **External Services**: Payment gateways, shipping APIs, notification services
+
+### 🌐 Ports
+- **Input Ports**: Interfaces that the core exposes to receive data
+- **Output Ports**: Interfaces that the core exposes to persist data
+
+## 📁 Folder Structure
+
+```
+src/
+├── domain/                    # 🎯 Core - Application domain
+│   ├── entities/             # Business entities
+│   │   └── order/
+│   │       ├── order.entity.ts
+│   │       ├── order-item.entity.ts
+│   │       ├── address.entity.ts
+│   │       └── order-status.entity.ts
+│   ├── repositories/         # Repository interfaces
+│   │   └── iorder.repository.ts
+│   ├── usecases/            # Use cases
+│   │   └── usecase.ts
+│   ├── errors/              # Domain errors
+│   ├── filters/             # Domain filters
+│   └── types/               # Domain types
+│       └── nullable.types.ts
+├── application/              # 🎯 Core - Application layer
+│   └── usecases/            # Use case implementations
+│       └── createOrder/
+│           ├── createOrder.useCase.ts
+│           └── createOrder.usecase.spec.ts
+├── adapters/                # 🔌 Adapters
+│   ├── controllers/         # Input adapters (REST API)
+│   │   ├── order.controller.ts
+│   │   ├── order.controller.spec.ts
+│   │   └── dtos/
+│   │       └── createOrder.dto.ts
+│   └── database/            # Output adapters (Database)
+│       └── order/
+│           └── order.repository.ts
+├── app.module.ts            # Main application module
+└── main.ts                  # Application entry point
 ```
 
-## Compile and run the project
+## 🚀 How to Run the Project
 
+### Prerequisites
+- Node.js (version 18 or higher)
+- Yarn or npm
+
+### Installation
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+# Install dependencies
+yarn install
 ```
 
-## Run tests
-
+### Execution
 ```bash
-# unit tests
-$ yarn run test
+# Development mode
+yarn run start:dev
 
-# e2e tests
-$ yarn run test:e2e
+# Production mode
+yarn run start:prod
 
-# test coverage
-$ yarn run test:cov
+# Debug mode
+yarn run start:debug
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## 🧪 Testing
 
 ```bash
-$ yarn install -g mau
-$ mau deploy
+# Unit tests
+yarn run test
+
+# Unit tests in watch mode
+yarn run test:watch
+
+# Tests with coverage
+yarn run test:cov
+
+# End-to-end tests
+yarn run test:e2e
+
+# Tests in debug mode
+yarn run test:debug
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 📊 Test Coverage
 
-## Resources
+The project maintains high test coverage, including:
+- **Unit Tests**: For entities, use cases, and adapters
+- **Integration Tests**: For controllers and repositories
+- **End-to-End Tests**: For complete order creation flows
 
-Check out a few resources that may come in handy when working with NestJS:
+## 🔧 Technologies Used
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- **Framework**: NestJS
+- **Language**: TypeScript
+- **Architecture**: Hexagonal (Ports and Adapters)
+- **Testing**: Jest
+- **Linting**: ESLint + Prettier
 
-## Support
+## 🎯 Implemented Use Cases
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Create Order
+- **Endpoint**: `POST /orders`
+- **Description**: Creates a new order with domain validations
+- **Input**: Customer data and shipping address
+- **Output**: Created order with unique ID and initial status
 
-## Stay in touch
+## 🔄 Data Flow
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+1. **HTTP Request** → Controller (Input Adapter)
+2. **Controller** → UseCase (Core)
+3. **UseCase** → Entity (Core) - Business validations
+4. **UseCase** → Repository (Output Adapter) - Persistence
+5. **Response** → Controller → HTTP Response
 
-## License
+## 🚧 Next Steps
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- [ ] Implement real database persistence
+- [ ] Add inventory validations
+- [ ] Integrate with payment gateways
+- [ ] Implement notification system
+- [ ] Add shipping calculation via shipping APIs
+- [ ] Implement authentication and authorization
+- [ ] Add logging and monitoring
+
+## 📝 License
+
+This project is under MIT license. See the [LICENSE](LICENSE) file for more details.
+
+## 🤝 Contributing
+
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📞 Support
+
+For questions or support, contact through official NestJS channels:
+- [NestJS Documentation](https://docs.nestjs.com)
+- [NestJS Discord](https://discord.gg/G7Qnnhy)

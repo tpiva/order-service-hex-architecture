@@ -1,5 +1,5 @@
-import Order from 'src/core/domain/entities/order/order.entity';
-import UseCase from 'src/core/usecases/usecase';
+import Order from 'src/domain/entities/order/order.entity';
+import UseCase from 'src/domain/usecases/usecase';
 
 export class CreateOrderUseCase extends UseCase<
   CreateOrderUseCase.Input,

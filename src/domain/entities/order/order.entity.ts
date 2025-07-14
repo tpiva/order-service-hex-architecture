@@ -16,6 +16,7 @@ export namespace OrderCommand {
   }
 }
 
+// TODO: In hexagonal architecture maybe a good idea to remove the rich domain entity and use a DTO instead
 export default class Order {
   private readonly _items: OrderItem[] = [];
   public constructor(

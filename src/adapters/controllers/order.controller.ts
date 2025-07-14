@@ -1,10 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { CreateOrderUseCase } from '../../../usecases/createOrder/createOrder.useCase';
 import { omit } from 'lodash';
 import {
   CreateOrderParamsDto,
   CreateOrderResponseDto,
 } from './dtos/createOrder.dto';
+import { CreateOrderUseCase } from 'src/application/usecases/createOrder/createOrder.useCase';
 
 @Controller('orders')
 export class OrderController {
