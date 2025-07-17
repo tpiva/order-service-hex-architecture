@@ -6,15 +6,6 @@ export class Address {
     private readonly streetNumber: number,
   ) {}
 
-  public createAddress(
-    street: string,
-    city: string,
-    state: string,
-    streetNumber: number,
-  ) {
-    return Object.freeze(new Address(street, city, state, streetNumber));
-  }
-
   public getAsJson() {
     return {
       street: this.street,

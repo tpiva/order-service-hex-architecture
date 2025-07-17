@@ -1,3 +1,5 @@
+import { Address } from 'src/domain/entities/order/address.entity';
+import { OrderStatus } from 'src/domain/entities/order/order-status.entity';
 import Order from 'src/domain/entities/order/order.entity';
 import UseCase from 'src/domain/usecases/usecase';
 
@@ -6,15 +8,17 @@ export class CreateOrderUseCase extends UseCase<
   CreateOrderUseCase.Output
 > {
   execute(input: CreateOrderUseCase.Input): Promise<CreateOrderUseCase.Output> {
-    const order = Order.create({
-      customerId: input.customerId,
-      shippingAddress: {
-        street: input.address.street,
-        city: input.address.city,
-        state: input.address.state,
-        number: input.address.number,
-      },
-    });
+    const order = new Order(
+      crypto.randomUUID(),
+      input.customerId,
+      OrderStatus.PENDING,
+      new Address(
+        input.address.street,
+        input.address.city,
+        input.address.state,
+        input.address.number,
+      ),
+    );
     return Promise.resolve({ order });
   }
 }

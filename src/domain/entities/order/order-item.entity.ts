@@ -5,7 +5,11 @@ export default class OrderItem {
     private readonly price: number,
   ) {}
 
-  public create(productId: number, quantity: number, price: number) {
-    return Object.freeze(new OrderItem(productId, quantity, price));
+  public getAsJson() {
+    return {
+      productId: this.productId,
+      quantity: this.quantity,
+      price: this.price,
+    };
   }
 }
