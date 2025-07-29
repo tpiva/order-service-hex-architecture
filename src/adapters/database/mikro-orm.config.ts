@@ -6,6 +6,7 @@ import { AddressSchema } from './schemas/order/address.schema';
 import { OrderStatusSchema } from './schemas/order/order-status.schema';
 import { Migrator } from '@mikro-orm/migrations';
 import * as dotenv from 'dotenv';
+import { SeedManager } from '@mikro-orm/seeder';
 
 dotenv.config();
 
@@ -19,10 +20,14 @@ const config: Options = {
   entities: [OrderSchema, OrderItemSchema, AddressSchema, OrderStatusSchema],
   debug: process.env.NODE_ENV !== 'production',
   forceEntityConstructor: true,
-  extensions: [Migrator],
+  extensions: [Migrator, SeedManager],
   migrations: {
     path: './dist/migrations',
     pathTs: './src/migrations',
+  },
+  seeder: {
+    path: './dist/seeders',
+    pathTs: './src/seeders',
   },
 };
 

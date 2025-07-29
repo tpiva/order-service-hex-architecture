@@ -3,7 +3,10 @@ import { OrderStatus } from 'src/domain/entities/order/order-status.entity';
 import Order from 'src/domain/entities/order/order.entity';
 import UseCase from 'src/domain/usecases/usecase';
 import { Inject, Injectable } from '@nestjs/common';
-import { IAddressRepository } from 'src/domain/repositories/iorder.repository';
+import {
+  IAddressRepository,
+  IOrderRepository,
+} from 'src/domain/repositories/iorder.repository';
 
 @Injectable()
 export class CreateOrderUseCase extends UseCase<
@@ -13,6 +16,8 @@ export class CreateOrderUseCase extends UseCase<
   constructor(
     @Inject('IAddressRepository')
     private readonly addressRepository: IAddressRepository,
+    @Inject('IOrderRepository')
+    private readonly orderRepository: IOrderRepository,
   ) {
     super();
   }
@@ -33,7 +38,9 @@ export class CreateOrderUseCase extends UseCase<
       OrderStatus.PENDING,
       persistedAddress,
     );
-    return { order };
+
+    const persistedOrder = await this.orderRepository.add(order);
+    return { order: persistedOrder };
   }
 }
 

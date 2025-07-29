@@ -721,6 +721,14 @@
   resolved "https://registry.yarnpkg.com/@mikro-orm/nestjs/-/nestjs-6.1.1.tgz#eb997289985c0a25769e59261e5e7dda776d4c8a"
   integrity sha512-aluD3eTeuCvIePDk5UBanHIhu1zAJQXqWAg47MZdHJmFkNuXn62DCXbD2c4X5TCpKW/m0zjba22ilyZ/AFG9qg==
 
+"@mikro-orm/seeder@^6.4.16":
+  version "6.4.16"
+  resolved "https://registry.yarnpkg.com/@mikro-orm/seeder/-/seeder-6.4.16.tgz#fc0877207373e76c8434255117d3cedf370b8e35"
+  integrity sha512-5wE8gvZZYhD7N9eGsgGfK+/oe74mCgixZaE4ClSo7xUSL6fJTpzctAU6sr4NTHo3QclNTxtiI5syJD2VByWQhg==
+  dependencies:
+    fs-extra "11.3.0"
+    globby "11.1.0"
+
 "@mikro-orm/sqlite@^6.4.16":
   version "6.4.16"
   resolved "https://registry.yarnpkg.com/@mikro-orm/sqlite/-/sqlite-6.4.16.tgz#9412c1a57d34134705bc2ceae8e7dcb3d89c15fe"

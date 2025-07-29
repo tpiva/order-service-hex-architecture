@@ -6,8 +6,9 @@ import { EntityManager } from '@mikro-orm/core';
 export class OrderRepository implements IOrderRepository {
   constructor(private readonly em: EntityManager) {}
 
-  async add(order: Order): Promise<void> {
+  async add(order: Order): Promise<Order> {
     await this.em.persistAndFlush(order);
+    return this.findById(order.id);
   }
 
   async findById(id: string): Promise<Nullable<Order>> {
