@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
-import { OrderController } from './adapters/controllers/order.controller';
-import { CreateOrderUseCase } from './application/usecases/createOrder/createOrder.useCase';
+import { OrderModule } from './application/modules/order/user.module';
+import { DatabaseModule } from './adapters/database/database.module';
 
 @Module({
-  controllers: [OrderController],
-  providers: [CreateOrderUseCase],
+  imports: [OrderModule, DatabaseModule],
 })
 export class AppModule {}

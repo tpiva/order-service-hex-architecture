@@ -1,7 +1,12 @@
-import Order from 'src/core/domain/entities/order/order.entity';
 import { Nullable } from 'src/domain/types/nullable.types';
+import Order from '../entities/order/order.entity';
+import { Address } from '../../domain/entities/order/address.entity';
 
 export interface IOrderRepository {
   add(order: Order): Promise<void>;
   findById(id: string): Promise<Nullable<Order>>;
+}
+
+export interface IAddressRepository {
+  findOrCreate(address: Address): Promise<Address>;
 }

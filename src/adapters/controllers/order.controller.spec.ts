@@ -1,14 +1,38 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { OrderController } from './order.controller';
-import { CreateOrderUseCase } from 'src/application/usecases/createOrder/createOrder.useCase';
+import { CreateOrderUseCase } from 'src/application/modules/order/usecases/createOrder/createOrder.useCase';
+import { Address } from 'src/domain/entities/order/address.entity';
 
 describe('OrderController', () => {
   let controller: OrderController;
+  let createOrderUseCase: { execute: jest.Mock };
 
   beforeEach(async () => {
+    createOrderUseCase = {
+      execute: jest.fn(async (dto) => ({
+        order: {
+          id: 'order-1',
+          customerId: dto.customerId,
+          status: 'PENDING',
+          shippingAddress: new Address(
+            dto.address.street,
+            dto.address.city,
+            dto.address.state,
+            dto.address.number,
+          ),
+          createdAt: new Date(),
+        },
+      })),
+    };
     const module: TestingModule = await Test.createTestingModule({
       controllers: [OrderController],
-      providers: [CreateOrderUseCase],
+      providers: [
+        { provide: CreateOrderUseCase, useValue: createOrderUseCase },
+        {
+          provide: 'IAddressRepository',
+          useValue: { findOrCreate: jest.fn() },
+        },
+      ],
     }).compile();
 
     controller = module.get<OrderController>(OrderController);

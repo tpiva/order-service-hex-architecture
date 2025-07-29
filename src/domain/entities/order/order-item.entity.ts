@@ -1,9 +1,23 @@
+import Order from './order.entity';
+
 export default class OrderItem {
+  public order?: Order;
+  public id!: number;
+  public productId: number;
+  public quantity: number;
+  public price: number;
+
   constructor(
-    private readonly productId: number,
-    private readonly quantity: number,
-    private readonly price: number,
-  ) {}
+    productId: number,
+    quantity: number,
+    price: number,
+    order?: Order,
+  ) {
+    this.productId = productId;
+    this.quantity = quantity;
+    this.price = price;
+    this.order = order;
+  }
 
   public getAsJson() {
     return {

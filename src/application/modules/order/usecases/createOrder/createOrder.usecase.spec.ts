@@ -1,11 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateOrderUseCase } from './createOrder.useCase';
+import { IAddressRepository } from 'src/domain/repositories/iorder.repository';
+import { Address } from 'src/domain/entities/order/address.entity';
+
 describe('CreateOrderUseCase', () => {
   let useCase: CreateOrderUseCase;
+  let addressRepository: jest.Mocked<IAddressRepository>;
 
   beforeEach(async () => {
+    addressRepository = {
+      findOrCreate: jest.fn(async (address: Address) => address),
+    };
     const module: TestingModule = await Test.createTestingModule({
-      providers: [CreateOrderUseCase],
+      providers: [
+        CreateOrderUseCase,
+        { provide: 'IAddressRepository', useValue: addressRepository },
+      ],
     }).compile();
 
     useCase = module.get<CreateOrderUseCase>(CreateOrderUseCase);

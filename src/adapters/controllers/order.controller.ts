@@ -1,10 +1,9 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { omit } from 'lodash';
 import {
   CreateOrderParamsDto,
   CreateOrderResponseDto,
 } from './dtos/createOrder.dto';
-import { CreateOrderUseCase } from 'src/application/usecases/createOrder/createOrder.useCase';
+import { CreateOrderUseCase } from 'src/application/modules/order/usecases/createOrder/createOrder.useCase';
 
 @Controller('orders')
 export class OrderController {
@@ -16,14 +15,16 @@ export class OrderController {
   ): Promise<CreateOrderResponseDto> {
     const result = await this.createOrderUseCase.execute(createOrderDto);
 
-    const rawAddress = result.order.shippingAddress.getAsJson();
+    const address = result.order.shippingAddress;
     return {
       id: result.order.id,
       customerId: result.order.customerId,
-      status: result.order.getStatus(),
+      status: result.order.status,
       shippingAddress: {
-        ...omit(rawAddress, 'streetNumber'),
-        streetNumber: rawAddress.streetNumber.toString(),
+        street: address['street'],
+        city: address['city'],
+        state: address['state'],
+        number: address['streetNumber'],
       },
       createdAt: result.order.createdAt,
     };
