@@ -7,13 +7,13 @@ const OrderSchema = new EntitySchema<Order>({
   class: Order,
   tableName: 'orders',
   properties: {
-    id: { type: 'number', primary: true },
+    id: { type: 'number', primary: true, autoincrement: true },
     customerId: { type: 'number', fieldName: 'customer_id' },
     status: { type: 'string', enum: true, items: Object.values(OrderStatus) },
     shippingAddress: {
-      entity: () => Address, // Entidade relacionada
+      entity: () => Address,
       kind: 'm:1',
-      fieldName: 'shipping_address_id', // Coluna FK
+      fieldName: 'shipping_address_id',
       nullable: false,
     },
     createdAt: { type: 'Date', fieldName: 'created_at' },

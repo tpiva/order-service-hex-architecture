@@ -31,9 +31,9 @@ export class CreateOrderUseCase extends UseCase<
       input.address.state,
       input.address.number,
     );
+    // TODO: Move address to pre defined data in database
     const persistedAddress = await this.addressRepository.findOrCreate(address);
     const order = new Order(
-      crypto.randomUUID(),
       input.customerId,
       OrderStatus.PENDING,
       persistedAddress,
@@ -48,6 +48,11 @@ export class CreateOrderUseCase extends UseCase<
 export namespace CreateOrderUseCase {
   export class Input {
     customerId: number;
+    // items: Array<{
+    //   productId: number;
+    //   quantity: number;
+    //   price: number;
+    // }>;
     address: {
       street: string;
       city: string;

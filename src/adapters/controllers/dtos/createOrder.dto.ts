@@ -11,7 +11,7 @@ export class CreateOrderParamsDto {
 }
 
 export class CreateOrderResponseDto {
-  id: string;
+  id: number;
   customerId: number;
   status: string;
   shippingAddress: AddressDto;

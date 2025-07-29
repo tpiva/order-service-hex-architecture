@@ -8,10 +8,10 @@ export class OrderRepository implements IOrderRepository {
 
   async add(order: Order): Promise<Order> {
     await this.em.persistAndFlush(order);
-    return this.findById(order.id);
+    return order;
   }
 
-  async findById(id: string): Promise<Nullable<Order>> {
-    return await this.em.findOne(Order, { id });
+  async findById(id: number): Promise<Nullable<Order>> {
+    return await this.em.findOne(Order, { id }, { populate: ['items'] });
   }
 }

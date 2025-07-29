@@ -4,7 +4,7 @@ import { Address } from '../../domain/entities/order/address.entity';
 
 export interface IOrderRepository {
   add(order: Order): Promise<Order>;
-  findById(id: string): Promise<Nullable<Order>>;
+  findById(id: number): Promise<Nullable<Order>>;
 }
 
 export interface IAddressRepository {

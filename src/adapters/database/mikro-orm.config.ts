@@ -3,7 +3,6 @@ import { MySqlDriver } from '@mikro-orm/mysql';
 import { OrderSchema } from './schemas/order/order.schema';
 import { OrderItemSchema } from './schemas/order/order-item.schema';
 import { AddressSchema } from './schemas/order/address.schema';
-import { OrderStatusSchema } from './schemas/order/order-status.schema';
 import { Migrator } from '@mikro-orm/migrations';
 import * as dotenv from 'dotenv';
 import { SeedManager } from '@mikro-orm/seeder';
@@ -17,7 +16,7 @@ const config: Options = {
   port: +(process.env.DB_PORT || 3306),
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
-  entities: [OrderSchema, OrderItemSchema, AddressSchema, OrderStatusSchema],
+  entities: [OrderSchema, OrderItemSchema, AddressSchema],
   debug: process.env.NODE_ENV !== 'production',
   forceEntityConstructor: true,
   extensions: [Migrator, SeedManager],
