@@ -21,11 +21,18 @@ export class OrderController {
       customerId: result.order.customerId,
       status: result.order.status,
       shippingAddress: {
+        id: address.id,
         street: address['street'],
         city: address['city'],
         state: address['state'],
         number: address['streetNumber'],
       },
+      items: result.order.items.map((item) => ({
+        id: item.id,
+        productId: item.productId,
+        quantity: item.quantity,
+        price: item.price,
+      })),
       createdAt: result.order.createdAt,
     };
   }

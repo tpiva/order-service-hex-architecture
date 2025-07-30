@@ -4,12 +4,9 @@ import { OrderRepository } from './order.repository';
 import { OrderSchema } from '../../schemas/order/order.schema';
 import { OrderItemSchema } from '../../schemas/order/order-item.schema';
 import { AddressSchema } from '../../schemas/order/address.schema';
-import { OrderStatusSchema } from '../../schemas/order/order-status.schema';
 import Order from '../../../../domain/entities/order/order.entity';
 import { OrderStatus } from '../../../../domain/entities/order/order-status.entity';
 import { Address } from '../../../../domain/entities/order/address.entity';
-
-// Certifique-se de instalar '@mikro-orm/sqlite' com: yarn add --dev @mikro-orm/sqlite
 
 describe('OrderRepository', () => {
   let orm: MikroORM<SqliteDriver>;
@@ -18,12 +15,7 @@ describe('OrderRepository', () => {
 
   beforeAll(async () => {
     orm = await MikroORM.init<SqliteDriver>({
-      entities: [
-        OrderSchema,
-        OrderItemSchema,
-        AddressSchema,
-        OrderStatusSchema,
-      ],
+      entities: [OrderSchema, OrderItemSchema, AddressSchema],
       dbName: ':memory:',
     });
     em = orm.em.fork() as SqlEntityManager;
@@ -36,15 +28,9 @@ describe('OrderRepository', () => {
 
   it('should persist and retrieve an order', async () => {
     const address = new Address('Rua Teste', 'Cidade', 'UF', 123);
-    const order = new Order(
-      'order-1',
-      1,
-      OrderStatus.PENDING,
-      address,
-      new Date(),
-    );
+    const order = new Order(1, OrderStatus.PENDING, address, new Date());
     await repository.add(order);
-    const found = await repository.findById('order-1');
+    const found = await repository.findById(1);
     expect(found).toBeDefined();
     expect(found?.id).toBe('order-1');
     expect(found?.customerId).toBe(1);

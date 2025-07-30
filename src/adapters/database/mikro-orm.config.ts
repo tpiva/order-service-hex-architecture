@@ -17,8 +17,7 @@ const config: Options = {
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
   entities: [OrderSchema, OrderItemSchema, AddressSchema],
-  debug: process.env.NODE_ENV !== 'production',
-  forceEntityConstructor: true,
+  // debug: process.env.NODE_ENV !== 'production',
   extensions: [Migrator, SeedManager],
   migrations: {
     path: './dist/migrations',

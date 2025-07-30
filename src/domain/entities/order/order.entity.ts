@@ -1,33 +1,29 @@
 import { Address } from './address.entity';
 import OrderItem from './order-item.entity';
 import { OrderStatus } from './order-status.entity';
-import { Collection } from '@mikro-orm/core';
 
-// TODO: In hexagonal architecture maybe a good idea to remove the rich domain entity and use a DTO instead
 export default class Order {
-  private readonly _items = new Collection<OrderItem>(this);
-  public shippingAddress!: Address;
-  public readonly id: number;
+  id: number;
+  customerId: number;
+  status: OrderStatus;
+  shippingAddress: Address;
+  createdAt: Date;
+  items: OrderItem[] = [];
 
-  public constructor(
-    public readonly customerId: number,
-    public readonly status: OrderStatus,
+  constructor(
+    customerId: number,
+    status: OrderStatus,
     shippingAddress: Address,
-    public readonly createdAt: Date = new Date(),
+    createdAt: Date = new Date(),
   ) {
+    this.customerId = customerId;
+    this.status = status;
     this.shippingAddress = shippingAddress;
-  }
-
-  public get items(): OrderItem[] {
-    return this._items.getItems();
-  }
-
-  public set items(items: OrderItem[]) {
-    this._items.set(items);
+    this.createdAt = createdAt;
   }
 
   public addItem(item: OrderItem): void {
-    this._items.add(item);
+    this.items.push(item);
   }
 
   public getAsJson() {
@@ -37,7 +33,7 @@ export default class Order {
       status: this.status,
       shippingAddress: this.shippingAddress.getAsJson(),
       createdAt: this.createdAt,
-      items: this._items.getItems().map((item) => item.getAsJson()),
+      items: this.items.map((item) => item.getAsJson()),
     };
   }
 }

@@ -4,12 +4,12 @@ import { OrderController } from 'src/adapters/controllers/order.controller';
 import { AddressRepository } from 'src/adapters/database/repositories/order/address.repository';
 import { OrderRepository } from 'src/adapters/database/repositories/order/order.repository';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { AddressSchema } from 'src/adapters/database/schemas/order/address.schema';
 import { OrderSchema } from 'src/adapters/database/schemas/order/order.schema';
+import { AddressSchema } from 'src/adapters/database/schemas/order/address.schema';
 import { EntityManager } from '@mikro-orm/core';
 
 @Module({
-  imports: [MikroOrmModule.forFeature([AddressSchema, OrderSchema])],
+  imports: [MikroOrmModule.forFeature([OrderSchema, AddressSchema])],
   providers: [
     CreateOrderUseCase,
     {

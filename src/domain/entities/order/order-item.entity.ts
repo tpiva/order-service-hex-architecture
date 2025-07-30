@@ -2,7 +2,7 @@ import Order from './order.entity';
 
 export default class OrderItem {
   public order?: Order;
-  public id!: number;
+  public id?: number;
   public productId: number;
   public quantity: number;
   public price: number;
@@ -21,6 +21,7 @@ export default class OrderItem {
 
   public getAsJson() {
     return {
+      id: this.id,
       productId: this.productId,
       quantity: this.quantity,
       price: this.price,
