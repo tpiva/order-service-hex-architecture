@@ -36,38 +36,59 @@ The project follows **Hexagonal Architecture** principles, organizing code into 
 ## 📁 Folder Structure
 
 ```
-src/
-├── domain/                    # 🎯 Core - Application domain
-│   ├── entities/             # Business entities
-│   │   └── order/
-│   │       ├── order.entity.ts
-│   │       ├── order-item.entity.ts
-│   │       ├── address.entity.ts
-│   │       └── order-status.entity.ts
-│   ├── repositories/         # Repository interfaces
-│   │   └── iorder.repository.ts
-│   ├── usecases/            # Use cases
-│   │   └── usecase.ts
-│   ├── errors/              # Domain errors
-│   ├── filters/             # Domain filters
-│   └── types/               # Domain types
-│       └── nullable.types.ts
-├── application/              # 🎯 Core - Application layer
-│   └── usecases/            # Use case implementations
-│       └── createOrder/
-│           ├── createOrder.useCase.ts
-│           └── createOrder.usecase.spec.ts
-├── adapters/                # 🔌 Adapters
-│   ├── controllers/         # Input adapters (REST API)
-│   │   ├── order.controller.ts
-│   │   ├── order.controller.spec.ts
-│   │   └── dtos/
-│   │       └── createOrder.dto.ts
-│   └── database/            # Output adapters (Database)
-│       └── order/
-│           └── order.repository.ts
-├── app.module.ts            # Main application module
-└── main.ts                  # Application entry point
+src
+ ┣ adapters
+ ┃ ┣ controllers
+ ┃ ┃ ┣ dtos
+ ┃ ┃ ┃ ┗ createOrder.dto.ts
+ ┃ ┃ ┣ order.controller.spec.ts
+ ┃ ┃ ┗ order.controller.ts
+ ┃ ┗ database
+ ┃ ┃ ┣ entities
+ ┃ ┃ ┣ mappers
+ ┃ ┃ ┣ repositories
+ ┃ ┃ ┃ ┗ order
+ ┃ ┃ ┃ ┃ ┣ address.repository.ts
+ ┃ ┃ ┃ ┃ ┣ order-items.repository.ts
+ ┃ ┃ ┃ ┃ ┣ order.repository.spec.ts
+ ┃ ┃ ┃ ┃ ┗ order.repository.ts
+ ┃ ┃ ┣ schemas
+ ┃ ┃ ┃ ┗ order
+ ┃ ┃ ┃ ┃ ┣ address.schema.ts
+ ┃ ┃ ┃ ┃ ┣ order-item.schema.ts
+ ┃ ┃ ┃ ┃ ┗ order.schema.ts
+ ┃ ┃ ┣ database.module.ts
+ ┃ ┃ ┗ mikro-orm.config.ts
+ ┣ application
+ ┃ ┗ modules
+ ┃ ┃ ┗ order
+ ┃ ┃ ┃ ┣ usecases
+ ┃ ┃ ┃ ┃ ┗ createOrder
+ ┃ ┃ ┃ ┃ ┃ ┣ createOrder.useCase.ts
+ ┃ ┃ ┃ ┃ ┃ ┗ createOrder.usecase.spec.ts
+ ┃ ┃ ┃ ┗ user.module.ts
+ ┣ domain
+ ┃ ┣ entities
+ ┃ ┃ ┗ order
+ ┃ ┃ ┃ ┣ address.entity.ts
+ ┃ ┃ ┃ ┣ order-item.entity.ts
+ ┃ ┃ ┃ ┣ order-status.entity.ts
+ ┃ ┃ ┃ ┗ order.entity.ts
+ ┃ ┣ errors
+ ┃ ┣ filters
+ ┃ ┣ repositories
+ ┃ ┃ ┗ iorder.repository.ts
+ ┃ ┣ types
+ ┃ ┃ ┗ nullable.types.ts
+ ┃ ┗ usecases
+ ┃ ┃ ┗ usecase.ts
+ ┣ migrations
+ ┃ ┣ .snapshot-study.json
+ ┃ ┗ Migration20250728222726.ts
+ ┣ seeders
+ ┃ ┗ DatabaseSeeder.ts
+ ┣ app.module.ts
+ ┗ main.ts
 ```
 
 ## 🚀 How to Run the Project

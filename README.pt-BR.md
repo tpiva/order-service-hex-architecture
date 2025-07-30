@@ -34,38 +34,59 @@ O projeto segue os princípios da **Arquitetura Hexagonal**, organizando o códi
 ## 📁 Estrutura de Pastas
 
 ```
-src/
-├── domain/                    # 🎯 Core - Domínio da aplicação
-│   ├── entities/             # Entidades de negócio
-│   │   └── order/
-│   │       ├── order.entity.ts
-│   │       ├── order-item.entity.ts
-│   │       ├── address.entity.ts
-│   │       └── order-status.entity.ts
-│   ├── repositories/         # Interfaces de repositórios
-│   │   └── iorder.repository.ts
-│   ├── usecases/            # Casos de uso
-│   │   └── usecase.ts
-│   ├── errors/              # Erros de domínio
-│   ├── filters/             # Filtros de domínio
-│   └── types/               # Tipos de domínio
-│       └── nullable.types.ts
-├── application/              # 🎯 Core - Camada de aplicação
-│   └── usecases/            # Implementação dos casos de uso
-│       └── createOrder/
-│           ├── createOrder.useCase.ts
-│           └── createOrder.usecase.spec.ts
-├── adapters/                # 🔌 Adaptadores
-│   ├── controllers/         # Adaptadores de entrada (REST API)
-│   │   ├── order.controller.ts
-│   │   ├── order.controller.spec.ts
-│   │   └── dtos/
-│   │       └── createOrder.dto.ts
-│   └── database/            # Adaptadores de saída (Banco de dados)
-│       └── order/
-│           └── order.repository.ts
-├── app.module.ts            # Módulo principal da aplicação
-└── main.ts                  # Ponto de entrada da aplicação
+src
+ ┣ adapters
+ ┃ ┣ controllers
+ ┃ ┃ ┣ dtos
+ ┃ ┃ ┃ ┗ createOrder.dto.ts
+ ┃ ┃ ┣ order.controller.spec.ts
+ ┃ ┃ ┗ order.controller.ts
+ ┃ ┗ database
+ ┃ ┃ ┣ entities
+ ┃ ┃ ┣ mappers
+ ┃ ┃ ┣ repositories
+ ┃ ┃ ┃ ┗ order
+ ┃ ┃ ┃ ┃ ┣ address.repository.ts
+ ┃ ┃ ┃ ┃ ┣ order-items.repository.ts
+ ┃ ┃ ┃ ┃ ┣ order.repository.spec.ts
+ ┃ ┃ ┃ ┃ ┗ order.repository.ts
+ ┃ ┃ ┣ schemas
+ ┃ ┃ ┃ ┗ order
+ ┃ ┃ ┃ ┃ ┣ address.schema.ts
+ ┃ ┃ ┃ ┃ ┣ order-item.schema.ts
+ ┃ ┃ ┃ ┃ ┗ order.schema.ts
+ ┃ ┃ ┣ database.module.ts
+ ┃ ┃ ┗ mikro-orm.config.ts
+ ┣ application
+ ┃ ┗ modules
+ ┃ ┃ ┗ order
+ ┃ ┃ ┃ ┣ usecases
+ ┃ ┃ ┃ ┃ ┗ createOrder
+ ┃ ┃ ┃ ┃ ┃ ┣ createOrder.useCase.ts
+ ┃ ┃ ┃ ┃ ┃ ┗ createOrder.usecase.spec.ts
+ ┃ ┃ ┃ ┗ user.module.ts
+ ┣ domain
+ ┃ ┣ entities
+ ┃ ┃ ┗ order
+ ┃ ┃ ┃ ┣ address.entity.ts
+ ┃ ┃ ┃ ┣ order-item.entity.ts
+ ┃ ┃ ┃ ┣ order-status.entity.ts
+ ┃ ┃ ┃ ┗ order.entity.ts
+ ┃ ┣ errors
+ ┃ ┣ filters
+ ┃ ┣ repositories
+ ┃ ┃ ┗ iorder.repository.ts
+ ┃ ┣ types
+ ┃ ┃ ┗ nullable.types.ts
+ ┃ ┗ usecases
+ ┃ ┃ ┗ usecase.ts
+ ┣ migrations
+ ┃ ┣ .snapshot-study.json
+ ┃ ┗ Migration20250728222726.ts
+ ┣ seeders
+ ┃ ┗ DatabaseSeeder.ts
+ ┣ app.module.ts
+ ┗ main.ts
 ```
 
 ## 🚀 Como Executar o Projeto
