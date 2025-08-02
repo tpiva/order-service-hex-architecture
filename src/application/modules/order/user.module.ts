@@ -7,6 +7,7 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { OrderSchema } from 'src/adapters/database/schemas/order/order.schema';
 import { AddressSchema } from 'src/adapters/database/schemas/order/address.schema';
 import { EntityManager } from '@mikro-orm/core';
+import { ProductRepository } from 'src/adapters/database/repositories/order/product.repository';
 
 @Module({
   imports: [MikroOrmModule.forFeature([OrderSchema, AddressSchema])],
@@ -20,6 +21,11 @@ import { EntityManager } from '@mikro-orm/core';
     {
       provide: 'IOrderRepository',
       useFactory: (em: EntityManager) => new OrderRepository(em),
+      inject: [EntityManager],
+    },
+    {
+      provide: 'IProductRepository',
+      useFactory: (em: EntityManager) => new ProductRepository(em),
       inject: [EntityManager],
     },
   ],

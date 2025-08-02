@@ -181,10 +181,50 @@
           "length": null,
           "mappedType": "integer"
         },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        }
+      },
+      "name": "product",
+      "indexes": [
+        {
+          "keyName": "PRIMARY",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {},
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
         "product_id": {
           "name": "product_id",
           "type": "int",
-          "unsigned": false,
+          "unsigned": true,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
@@ -226,6 +266,16 @@
       "indexes": [
         {
           "columnNames": [
+            "product_id"
+          ],
+          "composite": false,
+          "keyName": "order_items_product_id_index",
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
             "order_id"
           ],
           "composite": false,
@@ -247,6 +297,18 @@
       ],
       "checks": [],
       "foreignKeys": {
+        "order_items_product_id_foreign": {
+          "constraintName": "order_items_product_id_foreign",
+          "columnNames": [
+            "product_id"
+          ],
+          "localTableName": "order_items",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "product",
+          "updateRule": "cascade"
+        },
         "order_items_order_id_foreign": {
           "constraintName": "order_items_order_id_foreign",
           "columnNames": [

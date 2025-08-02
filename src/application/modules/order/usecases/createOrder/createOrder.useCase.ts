@@ -6,8 +6,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import {
   IAddressRepository,
   IOrderRepository,
+  IProductRepository,
 } from 'src/domain/repositories/iorder.repository';
 import OrderItem from 'src/domain/entities/order/order-item.entity';
+import { Product } from 'src/domain/entities/order/product.entity';
 
 @Injectable()
 export class CreateOrderUseCase extends UseCase<
@@ -17,6 +19,8 @@ export class CreateOrderUseCase extends UseCase<
   constructor(
     @Inject('IAddressRepository')
     private readonly addressRepository: IAddressRepository,
+    @Inject('IProductRepository')
+    private readonly productRepository: IProductRepository,
     @Inject('IOrderRepository')
     private readonly orderRepository: IOrderRepository,
   ) {
@@ -40,19 +44,31 @@ export class CreateOrderUseCase extends UseCase<
       persistedAddress,
     );
 
+    const products = await this.getProducts(
+      input.items.map((item) => item.productId),
+    );
+
     if (input.items && input.items.length > 0) {
       input.items.forEach((item) => {
         const orderItem = new OrderItem(
-          item.productId,
+          products.find((p) => p.id === item.productId),
           item.quantity,
           item.price,
         );
         order.addItem(orderItem);
       });
     }
-    
+
     const persistedOrder = await this.orderRepository.add(order);
     return { order: persistedOrder };
+  }
+
+  private async getProducts(productIds: number[]): Promise<Product[]> {
+    const promises = productIds.map((productId) => {
+      return this.productRepository.findById(productId);
+    });
+
+    return Promise.all(promises);
   }
 }
 

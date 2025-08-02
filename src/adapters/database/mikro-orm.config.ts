@@ -6,6 +6,7 @@ import { AddressSchema } from './schemas/order/address.schema';
 import { Migrator } from '@mikro-orm/migrations';
 import * as dotenv from 'dotenv';
 import { SeedManager } from '@mikro-orm/seeder';
+import { ProductSchema } from './schemas/order/product.schema';
 
 dotenv.config();
 
@@ -16,8 +17,8 @@ const config: Options = {
   port: +(process.env.DB_PORT || 3306),
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
-  entities: [OrderSchema, OrderItemSchema, AddressSchema],
-  // debug: process.env.NODE_ENV !== 'production',
+  entities: [OrderSchema, OrderItemSchema, AddressSchema, ProductSchema],
+  debug: process.env.NODE_ENV !== 'production',
   extensions: [Migrator, SeedManager],
   migrations: {
     path: './dist/migrations',

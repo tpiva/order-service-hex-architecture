@@ -21,9 +21,14 @@ type OrderItemDto = {
 
 type OrderItemResponseDto = {
   id: number;
-  productId: number;
+  product: ProductResponseDto;
   quantity: number;
   price: number;
+};
+
+type ProductResponseDto = {
+  id: number;
+  name: string;
 };
 
 export class CreateOrderParamsDto {
