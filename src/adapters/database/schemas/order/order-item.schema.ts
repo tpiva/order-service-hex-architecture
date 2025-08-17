@@ -1,6 +1,7 @@
 import { EntitySchema } from '@mikro-orm/core';
 import OrderItem from '../../../../domain/entities/order/order-item.entity';
 import { Product } from 'src/domain/entities/order/product.entity';
+import Order from 'src/domain/entities/order/order.entity';
 
 const OrderItemSchema = new EntitySchema<OrderItem>({
   class: OrderItem,
@@ -17,10 +18,14 @@ const OrderItemSchema = new EntitySchema<OrderItem>({
     price: { type: 'number' },
     order: {
       kind: 'm:1',
-      entity: () => 'Order',
+      entity: () => Order,
       fieldName: 'order_id',
     },
-    productId: undefined
+    productId: {
+      type: 'number',
+      persist: false,
+      getter: true,
+    },
   },
 });
 

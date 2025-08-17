@@ -29,7 +29,10 @@ export class OrderController {
       },
       items: result.order.items.map((item) => ({
         id: item.id,
-        productId: item.productId,
+        product: {
+          id: item.product.id,
+          name: item.product.name,
+        },
         quantity: item.quantity,
         price: item.price,
       })),
