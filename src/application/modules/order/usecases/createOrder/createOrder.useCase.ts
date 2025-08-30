@@ -10,6 +10,7 @@ import {
 } from 'src/domain/repositories/iorder.repository';
 import OrderItem from 'src/domain/entities/order/order-item.entity';
 import { Product } from 'src/domain/entities/order/product.entity';
+import { OrderQueueProducer } from 'src/adapters/queue/order.producer';
 
 @Injectable()
 export class CreateOrderUseCase extends UseCase<
@@ -23,6 +24,7 @@ export class CreateOrderUseCase extends UseCase<
     private readonly productRepository: IProductRepository,
     @Inject('IOrderRepository')
     private readonly orderRepository: IOrderRepository,
+    private readonly orderProducer: OrderQueueProducer,
   ) {
     super();
   }
@@ -60,6 +62,7 @@ export class CreateOrderUseCase extends UseCase<
     }
 
     const persistedOrder = await this.orderRepository.add(order);
+    await this.orderProducer.addOrderToQueue(persistedOrder);
     return { order: persistedOrder };
   }
 
