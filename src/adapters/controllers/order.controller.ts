@@ -1,15 +1,23 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreateOrderParamsDto,
   CreateOrderResponseDto,
 } from './dtos/createOrder.dto';
 import { CreateOrderUseCase } from 'src/application/modules/order/usecases/createOrder/createOrder.useCase';
 
+@ApiTags('orders')
 @Controller('orders')
 export class OrderController {
   constructor(private readonly createOrderUseCase: CreateOrderUseCase) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a new order' })
+  @ApiResponse({
+    status: 201,
+    description: 'The order has been successfully created.',
+    type: CreateOrderResponseDto,
+  })
   async createOrder(
     @Body() createOrderDto: CreateOrderParamsDto,
   ): Promise<CreateOrderResponseDto> {

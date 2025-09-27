@@ -3,10 +3,12 @@ import Order from '../entities/order/order.entity';
 import { Address } from '../../domain/entities/order/address.entity';
 import OrderItem from '../entities/order/order-item.entity';
 import { Product } from '../entities/order/product.entity';
+import { OrderStatus } from '../entities/order/order-status.entity';
 
 export interface IOrderRepository {
   add(order: Order): Promise<Order>;
   findById(id: number): Promise<Nullable<Order>>;
+  updateOrderStatus(order: Order, newStatus: OrderStatus): Promise<void>;
 }
 
 export interface IAddressRepository {

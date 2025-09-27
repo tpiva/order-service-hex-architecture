@@ -8,9 +8,13 @@ import { OrderSchema } from 'src/adapters/database/schemas/order/order.schema';
 import { AddressSchema } from 'src/adapters/database/schemas/order/address.schema';
 import { EntityManager } from '@mikro-orm/core';
 import { ProductRepository } from 'src/adapters/database/repositories/order/product.repository';
+import { QueueModule } from 'src/adapters/queue/queue.module';
 
 @Module({
-  imports: [MikroOrmModule.forFeature([OrderSchema, AddressSchema])],
+  imports: [
+    MikroOrmModule.forFeature([OrderSchema, AddressSchema]),
+    QueueModule,
+  ],
   providers: [
     CreateOrderUseCase,
     {
