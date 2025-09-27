@@ -20,6 +20,7 @@ describe('OrderController', () => {
             dto.address.state,
             dto.address.number,
           ),
+          items: [],
           createdAt: new Date(),
         },
       })),

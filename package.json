@@ -42,13 +42,15 @@
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^11.2.0",
     "cache-manager": "^7.1.1",
     "crypto": "^1.0.1",
     "keyv": "^5.5.0",
     "lodash": "^4.17.21",
     "mysql2": "^3.14.2",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@mikro-orm/cli": "^6.4.16",

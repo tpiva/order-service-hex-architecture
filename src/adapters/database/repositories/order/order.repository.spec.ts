@@ -4,6 +4,7 @@ import { OrderRepository } from './order.repository';
 import { OrderSchema } from '../../schemas/order/order.schema';
 import { OrderItemSchema } from '../../schemas/order/order-item.schema';
 import { AddressSchema } from '../../schemas/order/address.schema';
+import { ProductSchema } from '../../schemas/order/product.schema';
 import Order from '../../../../domain/entities/order/order.entity';
 import { OrderStatus } from '../../../../domain/entities/order/order-status.entity';
 import { Address } from '../../../../domain/entities/order/address.entity';
@@ -14,10 +15,12 @@ describe('OrderRepository', () => {
   let repository: OrderRepository;
 
   beforeAll(async () => {
-    orm = await MikroORM.init<SqliteDriver>({
-      entities: [OrderSchema, OrderItemSchema, AddressSchema],
+    orm = await MikroORM.init({
+      driver: SqliteDriver,
+      entities: [OrderSchema, OrderItemSchema, AddressSchema, ProductSchema],
       dbName: ':memory:',
     });
+    await orm.schema.createSchema();
     em = orm.em.fork() as SqlEntityManager;
     repository = new OrderRepository(em);
   });
@@ -32,7 +35,7 @@ describe('OrderRepository', () => {
     await repository.add(order);
     const found = await repository.findById(1);
     expect(found).toBeDefined();
-    expect(found?.id).toBe('order-1');
+    expect(found?.id).toBe(1);
     expect(found?.customerId).toBe(1);
   });
 });

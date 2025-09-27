@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CreateOrderUseCase } from './createOrder.useCase';
 import { IAddressRepository } from 'src/domain/repositories/iorder.repository';
 import { Address } from 'src/domain/entities/order/address.entity';
+import { OrderQueueProducer } from 'src/adapters/queue/order.producer';
 
 describe('CreateOrderUseCase', () => {
   let useCase: CreateOrderUseCase;
@@ -15,6 +16,18 @@ describe('CreateOrderUseCase', () => {
       providers: [
         CreateOrderUseCase,
         { provide: 'IAddressRepository', useValue: addressRepository },
+        {
+          provide: 'IProductRepository',
+          useValue: { findById: jest.fn() },
+        },
+        {
+          provide: 'IOrderRepository',
+          useValue: { add: jest.fn((order) => Promise.resolve(order)) },
+        },
+        {
+          provide: OrderQueueProducer,
+          useValue: { addOrderToQueue: jest.fn() },
+        },
       ],
     }).compile();
 
@@ -34,6 +47,7 @@ describe('CreateOrderUseCase', () => {
         state: 'Test State',
         number: 123,
       },
+      items: [],
     };
 
     const result = await useCase.execute(input);
